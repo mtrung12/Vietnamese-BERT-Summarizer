@@ -1,7 +1,7 @@
 import argparse
 from tqdm import tqdm
 import numpy as np
-
+import os
 from config import MODEL_MAP, K_CLUSTERS, DEVICE
 from data_loader import load_and_preprocess_data
 from embedding import get_sentence_embeddings
@@ -12,15 +12,15 @@ def main(model_name):
     if model_name not in MODEL_MAP:
         raise ValueError(f"Model name {model_name} not supported. Available: {list(MODEL_MAP.keys())}")
     
-    model_name = MODEL_MAP[model_name]
-    print(f"\nProcessing model: {model_name} ({model_name})")
+    full_model_name = MODEL_MAP[model_name]
+    print(f"\nProcessing model: {full_model_name} ({model_name})")
     clusters = load_and_preprocess_data()
     r1_scores = []
     r2_scores = []
     
     for cluster in tqdm(clusters):
         sentences = cluster['sentences']
-        embeddings = get_sentence_embeddings(sentences, model_name, DEVICE)
+        embeddings = get_sentence_embeddings(sentences, full_model_name, DEVICE)
         generated_sum = generate_summary(sentences, embeddings, K_CLUSTERS)
         r1, r2 = evaluate_rouge(generated_sum, cluster['human_sums'])
         r1_scores.append(r1)
@@ -34,10 +34,10 @@ def main(model_name):
     # Save results
     results_dir = "results"
     os.makedirs(results_dir, exist_ok=True)  # Create folder if it doesn't exist
-    result_file = os.path.join(results_dir, f"{short_name}_res.json")
+    result_file = os.path.join(results_dir, f"{model_name}_res.json")
     results = {
-        "model": short_name,
-        "full_model_name": model_name,
+        "model": model_name,
+        "full_model_name": full_model_name,
         "avg_rouge_1": avg_r1,
         "avg_rouge_2": avg_r2
     }
