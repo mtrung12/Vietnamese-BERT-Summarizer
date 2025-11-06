@@ -3,8 +3,8 @@ from transformers import AutoTokenizer, AutoModel
 import torch
 
 def get_sentence_embeddings(sentences, model_name, device):
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-    model = AutoModel.from_pretrained(model_name, trust_remote_code=True).to(device)
+    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True, use_fast=False)
+    model = AutoModel.from_pretrained(model_name, torch_dtype="auto", trust_remote_code=True).to(device)
     model.eval()
     
     embeddings = []
