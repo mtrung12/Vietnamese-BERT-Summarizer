@@ -12,6 +12,8 @@ def get_sentence_embeddings(sentences, model_name, device):
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModel.from_pretrained(model_name)
+        
+    model.to(device)
     model.eval()
     
     embeddings = []
