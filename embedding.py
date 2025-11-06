@@ -1,10 +1,17 @@
 import numpy as np
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModel, BertTokenizer
 import torch
 
 def get_sentence_embeddings(sentences, model_name, device):
-    tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True, use_fast=False)
-    model = AutoModel.from_pretrained(model_name, torch_dtype="auto", trust_remote_code=True).to(device)
+    if "vibert4news" in model_name.lower():
+        tokenizer = BertTokenizer.from_pretrained(model_name)
+        model = AutoModel.from_pretrained(model_name)
+    elif "phobert" in model_name.lower():
+        tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
+        model = AutoModel.from_pretrained(model_name)
+    else:
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModel.from_pretrained(model_name)
     model.eval()
     
     embeddings = []
