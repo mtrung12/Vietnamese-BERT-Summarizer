@@ -55,7 +55,7 @@ def main(model_name):
     
     results_dir = args.output_dir
     os.makedirs(results_dir, exist_ok=True) 
-    result_file = os.path.join(results_dir, f"{model_name}_res.json")
+    result_file = os.path.join(results_dir, f"{model_name}_rate{args.compression_rate}_res.json")
     results = {
         "model": model_name,
         "full_model_name": full_model_name,
