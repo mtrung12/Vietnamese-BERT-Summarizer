@@ -10,7 +10,7 @@ from summarizer import generate_summary
 from evaluate import evaluate_rouge
 import pandas as pd
 
-def main(model_name):
+def main():
     parser = argparse.ArgumentParser(description="Vietnamese Extractive MDS with BERT + KMeans")
     parser.add_argument("--model_name", type = str, required = True)
     parser.add_argument("--data_dir", type = str, required = False, default = 'data/VietnameseMDS.csv' , help = "Data files in .csv with following columns cluster(id of the record), text, human_summary_i (i = 1,2,3,...)")
@@ -55,9 +55,9 @@ def main(model_name):
     
     results_dir = args.output_dir
     os.makedirs(results_dir, exist_ok=True) 
-    result_file = os.path.join(results_dir, f"{model_name}_rate{args.compression_rate}_res.json")
+    result_file = os.path.join(results_dir, f"{args.model_name}_rate{args.compression_rate}_res.json")
     results = {
-        "model": model_name,
+        "model": args.model_name,
         "full_model_name": full_model_name,
         "avg_rouge_1": avg_r1,
         "avg_rouge_2": avg_r2
