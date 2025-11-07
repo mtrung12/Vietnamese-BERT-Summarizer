@@ -5,7 +5,7 @@ from sklearn.metrics.pairwise import euclidean_distances
 def count_syllable(text):
     return len(text.strip().split())
 
-def generate_summary(sentences, embeddings, compression_rate=0.3):
+def generate_summary(sentences, embeddings, compression_rate):
     if not sentences or len(sentences) == 0:
         return ""
     
@@ -79,7 +79,7 @@ def generate_summary(sentences, embeddings, compression_rate=0.3):
     final_syllables = count_syllable(summary)
 
     achieved_rate = final_syllables / total_syllables
-
+    over = final_syllables > max_allowed_syllables
     print(f"Output: {len(summary_sents)} sentences, {final_syllables} syllables "
           f"({achieved_rate:.1%} of input){' [EXCEEDED BY {}]'.format(final_syllables - max_allowed_syllables) if over else ''}")
 
