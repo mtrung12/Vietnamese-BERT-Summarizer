@@ -1,17 +1,16 @@
 import pandas as pd
 from underthesea import sent_tokenize, word_tokenize
-from config import DATA_PATH
 
-def load_and_preprocess_data():
-    df = pd.read_csv(DATA_PATH)
+def load_and_preprocess_data(data_path):
+    df = pd.read_csv(data_path)
     clusters = []
     for _, row in df.iterrows():
         cluster_id = row['cluster']
         raw_text = row['text']
         sentences = sent_tokenize(raw_text)
-        human_sum1 = row['human_summary_1']
-        human_sum2 = row['human_summary_2']
-        human_sums = [word_tokenize(h, format="text") for h in [human_sum1, human_sum2]]
+        human_sums =   [word_tokenize(value, format="text") 
+                        for key, value in row.items() 
+                        if key.startswith("human_summary_")]
         clusters.append({
             'cluster_id': cluster_id,
             'sentences': sentences,

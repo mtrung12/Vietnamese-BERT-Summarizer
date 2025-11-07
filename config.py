@@ -12,6 +12,4 @@ MODEL_MAP = {
     'mbert-uncased': "google-bert/bert-base-multilingual-uncased"
 }
 
-DATA_PATH = "data/VietnameseMDS.csv"
-K_CLUSTERS = 4
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
