@@ -20,6 +20,8 @@ def get_sentence_embeddings(sentences, model_name, device):
     batch_size = 32
     for i in range(0, len(sentences), batch_size):
         batch_sents = sentences[i:i+batch_size]
+        if "phobert" in model_name.lower():
+            batch_sents = [word_tokenize(sent, format="text") for sent in batch_sents]
         inputs = tokenizer(batch_sents, padding=True, truncation=True, max_length=512, return_tensors="pt").to(device)
         with torch.no_grad():
             outputs = model(**inputs)
