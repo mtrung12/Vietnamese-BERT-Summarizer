@@ -3,11 +3,7 @@ from underthesea import sent_tokenize
 from vncorenlp import VnCoreNLP                
 import config
 
-mvncorenlp = VnCoreNLP(
-    config.VNCORENLP_PATH,
-    annotators="wseg",         
-    max_heap_size='-Xmx2g'
-)
+
 
 def mvn_word_tokenize(text: str) -> str:
     tokenized = mvncorenlp.tokenize(text)          # list[list[str]]
@@ -16,6 +12,11 @@ def mvn_word_tokenize(text: str) -> str:
 
 
 def load_and_preprocess_data(data_path: str):
+    mvncorenlp = VnCoreNLP(
+    config.VNCORENLP_PATH,
+    annotators="wseg",         
+    max_heap_size='-Xmx2g'
+    )
     df = pd.read_csv(data_path)
     clusters = []
 
