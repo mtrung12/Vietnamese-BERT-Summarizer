@@ -3,7 +3,7 @@ from transformers import AutoTokenizer, AutoModel, BertTokenizer, BertModel
 import torch
 from config import VNCORENLP_PATH
 from vnnlpcore import mvn_word_tokenize
-
+MAX_LENGTH = 256
 
 def get_sentence_embeddings(sentences, model_name, device):
     if "vibert4news" in model_name.lower():
