@@ -1,6 +1,6 @@
 from rouge import Rouge
 from underthesea import word_tokenize
-from data_loader import mvn_word_tokenize
+from vnnlpcore import mvn_word_tokenize
 
 def evaluate_rouge(generated_sum, human_sums):
     rouge = Rouge()

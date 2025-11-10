@@ -1,22 +1,10 @@
 import pandas as pd
 from underthesea import sent_tokenize         
-from vncorenlp import VnCoreNLP                
 import config
-
-
-
-def mvn_word_tokenize(text: str) -> str:
-    tokenized = mvncorenlp.tokenize(text)          # list[list[str]]
-    flat = [token for sent in tokenized for token in sent]
-    return " ".join(flat)
+from vnnlpcore import mvn_word_tokenize
 
 
 def load_and_preprocess_data(data_path: str):
-    mvncorenlp = VnCoreNLP(
-    config.VNCORENLP_PATH,
-    annotators="wseg",         
-    max_heap_size='-Xmx2g'
-    )
     df = pd.read_csv(data_path)
     clusters = []
 

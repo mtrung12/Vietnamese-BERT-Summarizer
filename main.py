@@ -3,7 +3,7 @@ from tqdm import tqdm
 import numpy as np
 import os
 import json
-from config import MODEL_MAP, DEVICE
+from config import MODEL_MAP, DEVICE, VNCORENLP_PATH
 from data_loader import load_and_preprocess_data
 from embedding import get_sentence_embeddings
 from summarizer import generate_summary
@@ -29,6 +29,9 @@ def main():
     detailed_results = []
     r1_scores = []
     r2_scores = []
+    
+    
+    
     
     for cluster in tqdm(clusters):
         sentences = cluster['sentences']

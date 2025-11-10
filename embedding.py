@@ -2,7 +2,7 @@ import numpy as np
 from transformers import AutoTokenizer, AutoModel, BertTokenizer, AutoModelForMaskedLM, BertModel
 import torch
 from config import VNCORENLP_PATH
-from data_loader import mvn_word_tokenize
+from vnnlpcore import mvn_word_tokenize
 
 def get_sentence_embeddings(sentences, model_name, device):
     if "vibert4news" in model_name.lower():
