@@ -1,15 +1,15 @@
 import numpy as np
-from transformers import AutoTokenizer, AutoModel, BertTokenizer
+from transformers import AutoTokenizer, AutoModel, BertTokenizer, AutoModelForMaskedLM, BertModel
 import torch
 from underthesea import word_tokenize
 
 def get_sentence_embeddings(sentences, model_name, device):
     if "vibert4news" in model_name.lower():
         tokenizer = BertTokenizer.from_pretrained(model_name)
-        model = AutoModel.from_pretrained(model_name)
+        model = BertModel.from_pretrained(model_name)  
     elif "phobert" in model_name.lower():
         tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
-        model = AutoModel.from_pretrained(model_name)
+        model = AutoModelForMaskedLM.from_pretrained(model_name)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModel.from_pretrained(model_name)
