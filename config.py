@@ -1,5 +1,6 @@
 # config.py
 import torch
+import os
 
 MODEL_MAP = {
     'vibert4news': "NlpHUST/vibert4news-base-cased",

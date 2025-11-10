@@ -1,11 +1,11 @@
 from rouge import Rouge
 from underthesea import word_tokenize
+from data_loader import mvn_word_tokenize
 
 def evaluate_rouge(generated_sum, human_sums):
     rouge = Rouge()
     scores = []
-    generated_sum_tokenized = word_tokenize(generated_sum, format="text") 
-
+    generated_sum_tokenized = mvn_word_tokenize(generated_sum) 
     for human_sum in human_sums:
         score = rouge.get_scores(generated_sum_tokenized, human_sum)[0]
         scores.append((score['rouge-1']['f'], score['rouge-2']['f']))
