@@ -1,5 +1,5 @@
 import numpy as np
-from transformers import AutoTokenizer, AutoModel, BertTokenizer, AutoModelForMaskedLM, BertModel
+from transformers import AutoTokenizer, AutoModel, BertTokenizer,  BertModel
 import torch
 from config import VNCORENLP_PATH
 from vnnlpcore import mvn_word_tokenize
@@ -7,10 +7,10 @@ from vnnlpcore import mvn_word_tokenize
 def get_sentence_embeddings(sentences, model_name, device):
     if "vibert4news" in model_name.lower():
         tokenizer = BertTokenizer.from_pretrained(model_name)
-        model = BertModel.from_pretrained(model_name)  
+        model = AutoModel.from_pretrained(model_name)  
     elif "phobert" in model_name.lower():
         tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False)
-        model = AutoModelForMaskedLM.from_pretrained(model_name)
+        model = AutoModel.from_pretrained(model_name)
     else:
         tokenizer = AutoTokenizer.from_pretrained(model_name)
         model = AutoModel.from_pretrained(model_name)
