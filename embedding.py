@@ -1,6 +1,7 @@
 import numpy as np
 from transformers import AutoTokenizer, AutoModel, BertTokenizer
 import torch
+from underthesea import word_tokenize
 
 def get_sentence_embeddings(sentences, model_name, device):
     if "vibert4news" in model_name.lower():
