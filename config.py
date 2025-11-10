@@ -12,5 +12,5 @@ MODEL_MAP = {
     'mbert-cased': "google-bert/bert-base-multilingual-cased",
     'mbert-uncased': "google-bert/bert-base-multilingual-uncased"
 }
-VNCORENLP_PATH = '/kaggle/input/vncorenlp-v1-2/other/default/2/VnCoreNLP-1.2.jar'
+VNCORENLP_PATH = '/kaggle/input/vncorenlp/VnCoreNLP-1.1.1.jar'
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
