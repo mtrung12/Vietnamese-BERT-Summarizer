@@ -29,7 +29,7 @@ def main():
     detailed_results = []
     r1_scores = []
     r2_scores = []
-    
+    rl_scores = []
     
     
     
@@ -38,9 +38,11 @@ def main():
         input_text = " ".join(sentences)
         embeddings = get_sentence_embeddings(sentences, full_model_name, DEVICE)
         generated_sum, output_syllables, input_syllables = generate_summary(sentences, embeddings, args.compression_rate)
-        r1, r2 = evaluate_rouge(generated_sum, cluster['human_sums'])
+        r1, r2, rl = evaluate_rouge(generated_sum, cluster['human_sums'])
         r1_scores.append(r1)
         r2_scores.append(r2)
+        rl_scores.append(rl)
+        
         detailed_results.append({
             "input_text": input_text,
             "generated_sum": generated_sum,
@@ -48,13 +50,17 @@ def main():
             "input_syllables": input_syllables,
             "output_syllables": output_syllables,
             "rouge_1": round(r1 * 100, 2),
-            "rouge_2": round(r2 * 100, 2)
+            "rouge_2": round(r2 * 100, 2),
+            "rouge_l": round(rl * 100, 2)
         })
     
     avg_r1 = np.mean(r1_scores) * 100
     avg_r2 = np.mean(r2_scores) * 100
+    avg_rl = np.mean(rl_scores) * 100
+    
     print(f"Average ROUGE-1: {avg_r1:.2f}%")
     print(f"Average ROUGE-2: {avg_r2:.2f}%")
+    print(f"Average ROUGE-L: {avg_rl:.2f}%")
     
     results_dir = args.output_dir
     os.makedirs(results_dir, exist_ok=True) 
@@ -63,7 +69,8 @@ def main():
         "model": args.model_name,
         "full_model_name": full_model_name,
         "avg_rouge_1": avg_r1,
-        "avg_rouge_2": avg_r2
+        "avg_rouge_2": avg_r2,
+        "avg_rouge_l": avg_rl
     }
     with open(result_file, 'w', encoding='utf-8') as f:
         json.dump(results, f, indent=4)
